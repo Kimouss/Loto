@@ -1,0 +1,63 @@
+version: '3.7'
+services:
+    apache:
+        build: .docker/apache
+        container_name: loto_apache
+        ports:
+            - '50515:80'
+        volumes:
+            - .:/var/www/app:cached
+        depends_on:
+            - php
+        networks:
+            - loto_network
+
+    mysql:
+        image: mysql:latest
+        container_name: loto_mysql
+        ports:
+            - '3306:3306'
+        networks:
+            - loto_network
+        environment:
+            MYSQL_ROOT_PASSWORD: fej7vae1Gainoo9
+            MYSQL_DATABASE: loto
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: dev
+        volumes:
+            - ./.docker/data/mysql:/var/lib/mysql
+        command:
+            - "--default-authentication-plugin=mysql_native_password"
+            - "--lower_case_table_names=1"
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: loto_phpmyadmin
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - '50516:80'
+        links:
+            - mysql
+        networks:
+            - loto_network
+
+    php:
+        build:
+            context: .docker/php
+            args:
+                USER_ID: ${USER_ID:-0}
+                GROUP_ID: ${GROUP_ID:-0}
+        container_name: loto_php
+        volumes:
+            - .:/var/www/app:cached
+        depends_on:
+            - mysql
+        networks:
+            - loto_network
+
+networks:
+    loto_network:
+        external: true
+
