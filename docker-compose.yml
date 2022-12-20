@@ -61,3 +61,5 @@ networks:
     loto_network:
         external: true
 
+nbWinRank
+amountRank
