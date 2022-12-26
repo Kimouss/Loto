@@ -11,9 +11,10 @@ RUN  apt-get install -y --no-install-recommends iputils-ping zlib1g-dev libpng-d
 
 # install node
 #RUN apt-get remove cmdtest -y cmdtest yarn
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
-#RUN npm -g install yarn
+RUN npm install -g npm@9.2.0
+RUN npm -g install yarn
 
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-configure gd && docker-php-ext-install gd

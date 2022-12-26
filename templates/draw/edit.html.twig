@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Draw{% endblock %}
+
+{% block body %}
+    <h1>Edit Draw</h1>
+
+    {{ include('draw/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_draw_index') }}">back to list</a>
+
+    {{ include('draw/_delete_form.html.twig') }}
+{% endblock %}

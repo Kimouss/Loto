@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Draw;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,13 @@ class DrawRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Draw::class);
+    }
+
+    public function getAllQuery(): Query
+    {
+        return $this->createQueryBuilder('draw')
+            ->getQuery()
+            ;
     }
 
     public function save(Draw $entity, bool $flush = false): void

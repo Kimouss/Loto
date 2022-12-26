@@ -19,7 +19,7 @@ kill:
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
 
 install: ## Install and start the project
-install: .env.local networks build start ckeditor assets success
+install: .env.local networks build start mysql assets success
 
 reset: ## Stop and start a fresh install of the project
 reset: kill install
@@ -109,7 +109,10 @@ npm_dev:
 ##
 ## IMPORT DATA ##
 ##
-import: import_loto import_euromillions import_superloto import_extraloto
+success_import:
+	@echo '\033[1;32mAll imported\033[0m';
+
+import: import_loto import_euromillions import_superloto import_extraloto success_import
 
 import_loto:
 	$(SYMFONY) app:import:csv data/loto_197605.csv

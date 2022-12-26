@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Draw{% endblock %}
+
+{% block body %}
+    <h1>Draw</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ draw.id }}</td>
+            </tr>
+            <tr>
+                <th>NbDraw</th>
+                <td>{{ draw.nbDraw }}</td>
+            </tr>
+            <tr>
+                <th>Day</th>
+                <td>{{ draw.day }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ draw.date ? draw.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Ball1</th>
+                <td>{{ draw.ball1 }}</td>
+            </tr>
+            <tr>
+                <th>Ball2</th>
+                <td>{{ draw.ball2 }}</td>
+            </tr>
+            <tr>
+                <th>Ball3</th>
+                <td>{{ draw.ball3 }}</td>
+            </tr>
+            <tr>
+                <th>Ball4</th>
+                <td>{{ draw.ball4 }}</td>
+            </tr>
+            <tr>
+                <th>Ball5</th>
+                <td>{{ draw.ball5 }}</td>
+            </tr>
+            <tr>
+                <th>LuckyBall</th>
+                <td>{{ draw.luckyBall }}</td>
+            </tr>
+            <tr>
+                <th>WinComboAsc</th>
+                <td>{{ draw.winComboAsc }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank1</th>
+                <td>{{ draw.nbWinRank1 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank1</th>
+                <td>{{ draw.amountRank1 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank2</th>
+                <td>{{ draw.nbWinRank2 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank2</th>
+                <td>{{ draw.amountRank2 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank3</th>
+                <td>{{ draw.nbWinRank3 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank3</th>
+                <td>{{ draw.amountRank3 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank4</th>
+                <td>{{ draw.nbWinRank4 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank4</th>
+                <td>{{ draw.amountRank4 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank5</th>
+                <td>{{ draw.nbWinRank5 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank5</th>
+                <td>{{ draw.amountRank5 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank6</th>
+                <td>{{ draw.nbWinRank6 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank6</th>
+                <td>{{ draw.amountRank6 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank7</th>
+                <td>{{ draw.nbWinRank7 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank7</th>
+                <td>{{ draw.amountRank7 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank8</th>
+                <td>{{ draw.nbWinRank8 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank8</th>
+                <td>{{ draw.amountRank8 }}</td>
+            </tr>
+            <tr>
+                <th>NbWinRank9</th>
+                <td>{{ draw.nbWinRank9 }}</td>
+            </tr>
+            <tr>
+                <th>AmountRank9</th>
+                <td>{{ draw.amountRank9 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_draw_index') }}">back to list</a>
+
+    <a href="{{ path('app_draw_edit', {'id': draw.id}) }}">edit</a>
+
+    {{ include('draw/_delete_form.html.twig') }}
+{% endblock %}
