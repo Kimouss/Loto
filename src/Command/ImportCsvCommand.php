@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Manager\DrawManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -20,7 +21,8 @@ class ImportCsvCommand extends Command
     private const BATCH_SIZE = 50;
 
     public function __construct(
-        private readonly DrawManager $drawManager
+        private readonly DrawManager $drawManager,
+        private readonly EntityManagerInterface $entityManager,
     )
     {
         parent::__construct();
@@ -62,10 +64,16 @@ class ImportCsvCommand extends Command
         $row = 1;
         $result = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+            while (($data = fgetcsv($handle, 3000, ";")) !== FALSE) {
                 if ($row === 1) {
                     $header = $data;
                 } else {
+                    if (empty($data[array_key_first($data)])) {
+                        continue;
+                    }
+                    if (count($data) > count($header)) {
+                        $header[] = '';
+                    }
                     $result[] = array_combine($header, $data);
                 }
                 $row++;
@@ -87,5 +95,7 @@ class ImportCsvCommand extends Command
             $this->drawManager->createFromCsv($rows[$i], $flush);
             $progressBar->advance();
         }
+
+        $this->entityManager->flush();
     }
 }

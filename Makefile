@@ -1,4 +1,4 @@
-DOCKER_COMPOSE  = docker-compose --env-file .env.local
+DOCKER_COMPOSE  = docker-compose
 
 EXEC_PHP        = $(DOCKER_COMPOSE) exec -T php
 EXEC_JS        = $(DOCKER_COMPOSE) exec -T php
@@ -9,10 +9,6 @@ YARN            = $(EXEC_JS) yarn
 NPM				= $(EXEC_JS) npm
 EXEC_CURL		= curl -X POST -H 'Content-type: application/json' https://hooks.slack.com/services/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 --data
 
-##
-## Project
-## -------
-##
 
 build:
 	@$(DOCKER_COMPOSE) pull --ignore-pull-failures
@@ -23,13 +19,13 @@ kill:
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
 
 install: ## Install and start the project
-install: .env.local networks build start assets success
+install: .env.local networks build start ckeditor assets success
 
 reset: ## Stop and start a fresh install of the project
 reset: kill install
 
 networks:
-	 -docker network create loto_network
+	 -docker network create kiwi_network
 
 start: ## Start the project
 	$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate
@@ -44,26 +40,27 @@ clean: kill
 success:
 	@echo '\033[1;32mInstall done\033[0m';
 
-cache:
+.PHONY: networks build kill install reset start stop clean success
+
+##
+## Utils
+## -----
+##
+cache: ## Reset cache
 cache:
 	@$(EXEC_PHP) php -r 'echo "Wait mysql database...\n"; set_time_limit(15); require __DIR__."/vendor/autoload.php"; (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__."/.env"); $$u = parse_url(getenv("DATABASE_URL")); for(;;) { if(@fsockopen($$u["host"], ($$u["port"] ?? 3306))) { break; }}'
 	-$(SYMFONY) cache:clear --no-warmup
 
 mysql: ## Reset the database and load fixtures
 mysql: .env.local vendor
-	@$(EXEC_PHP) php -r 'echo "Wait mysql database...\n"; set_time_limit(15); require __DIR__."/vendor/autoload.php"; (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__."/.env"); $$u = parse_url(getenv("DATABASE_URL")); for(;;) { if(@fsockopen($$u["host"], ($$u["port"] ?? 3306))) { break; }}'
 	-$(SYMFONY) doctrine:database:drop --if-exists --force
 	-$(SYMFONY) doctrine:database:create --if-not-exists
-	-$(SYMFONY) doctrine:schema:create
-	-$(SYMFONY) messenger:setup-transports
-	# $(SYMFONY) doctrine:migrations:migrate --no-interaction --allow-no-migration
+	-$(SYMFONY) doctrine:migrations:migrate --no-interaction --allow-no-migration
 
 migration: ## Generate a new doctrine migration
 migration: vendor
-	$(SYMFONY) doctrine:migrations:diff
+	-$(SYMFONY) doctrine:migrations:diff
 
-assets: ## Run Webpack Encore to compile assets
-#assets: node_modules
 assets: vendor
 	$(SYMFONY) assets:install public
 
@@ -74,7 +71,7 @@ update-composer:
 .PHONY: mongo mysql migration assets jwt jwt-override update-composer deploy-dev deploy-pp deploy-prod
 
 # rules based on files
-composer.lock: composer.json
+composer.lock: ## Update composer
 	$(COMPOSER) update --lock --no-scripts --no-interaction
 
 vendor: composer.lock
@@ -88,9 +85,11 @@ node_modules: package-lock.json
 	$(NPM) run dev
 	@touch -c node_modules
 
+npm_watch: ## Run npm watcher
 npm_watch:
 	$(NPM) run watch
 
+npm_dev: ## Build npm
 npm_dev:
 	$(NPM) run dev
 
@@ -105,6 +104,39 @@ npm_dev:
 		echo cp .env .env.local;\
 		cp .env .env.local;\
 	fi
+
+
+##
+## IMPORT DATA ##
+##
+import: import_loto import_euromillions import_superloto import_extraloto
+
+import_loto:
+	$(SYMFONY) app:import:csv data/loto_197605.csv
+	$(SYMFONY) app:import:csv data/loto_200810.csv
+	$(SYMFONY) app:import:csv data/loto_201703.csv
+	$(SYMFONY) app:import:csv data/loto_201902.csv
+	$(SYMFONY) app:import:csv data/loto_201911.csv
+
+import_euromillions:
+	$(SYMFONY) app:import:csv data/euromillions_200402.csv
+	$(SYMFONY) app:import:csv data/euromillions_201105.csv
+	$(SYMFONY) app:import:csv data/euromillions_201402.csv
+	$(SYMFONY) app:import:csv data/euromillions_201609.csv
+	$(SYMFONY) app:import:csv data/euromillions_201902.csv
+	$(SYMFONY) app:import:csv data/euromillions_202002.csv
+
+import_superloto:
+	$(SYMFONY) app:import:csv data/superloto_199605.csv
+	$(SYMFONY) app:import:csv data/superloto_200810.csv
+	$(SYMFONY) app:import:csv data/superloto_201703.csv
+	$(SYMFONY) app:import:csv data/superloto_201907.csv
+
+import_extraloto:
+	$(SYMFONY) app:import:csv data/grandloto_201912.csv
+	$(SYMFONY) app:import:csv data/lotonoel_201703.csv
+
+mysql_data: mysql import
 
 .DEFAULT_GOAL := help
 help:

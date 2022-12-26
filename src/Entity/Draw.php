@@ -16,88 +16,88 @@ class Draw
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbDraw = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $day = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $ball1 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $ball2 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $ball3 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $ball4 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $ball5 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $luckyBall = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $winComboAsc = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank1 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank1 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank2 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank2 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank3 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank3 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank4 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank4 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank5 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank5 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank6 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank6 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank7 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank7 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank8 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank8 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbWinRank9 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $amountRank9 = null;
 
     public function getId(): ?int
@@ -110,7 +110,7 @@ class Draw
         return $this->nbDraw;
     }
 
-    public function setNbDraw(int $nbDraw): self
+    public function setNbDraw(?int $nbDraw): self
     {
         $this->nbDraw = $nbDraw;
 
@@ -122,7 +122,7 @@ class Draw
         return $this->day;
     }
 
-    public function setDay(string $day): self
+    public function setDay(?string $day): self
     {
         $this->day = $day;
 
@@ -134,7 +134,7 @@ class Draw
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -146,7 +146,7 @@ class Draw
         return $this->ball1;
     }
 
-    public function setBall1(int $ball1): self
+    public function setBall1(?int $ball1): self
     {
         $this->ball1 = $ball1;
 
@@ -158,7 +158,7 @@ class Draw
         return $this->ball2;
     }
 
-    public function setBall2(int $ball2): self
+    public function setBall2(?int $ball2): self
     {
         $this->ball2 = $ball2;
 
@@ -170,7 +170,7 @@ class Draw
         return $this->ball3;
     }
 
-    public function setBall3(int $ball3): self
+    public function setBall3(?int $ball3): self
     {
         $this->ball3 = $ball3;
 
@@ -182,7 +182,7 @@ class Draw
         return $this->ball4;
     }
 
-    public function setBall4(int $ball4): self
+    public function setBall4(?int $ball4): self
     {
         $this->ball4 = $ball4;
 
@@ -194,7 +194,7 @@ class Draw
         return $this->ball5;
     }
 
-    public function setBall5(int $ball5): self
+    public function setBall5(?int $ball5): self
     {
         $this->ball5 = $ball5;
 
@@ -206,7 +206,7 @@ class Draw
         return $this->luckyBall;
     }
 
-    public function setLuckyBall(int $luckyBall): self
+    public function setLuckyBall(?int $luckyBall): self
     {
         $this->luckyBall = $luckyBall;
 
@@ -218,7 +218,7 @@ class Draw
         return $this->winComboAsc;
     }
 
-    public function setWinComboAsc(string $winComboAsc): self
+    public function setWinComboAsc(?string $winComboAsc): self
     {
         $this->winComboAsc = $winComboAsc;
 
@@ -230,7 +230,7 @@ class Draw
         return $this->nbWinRank1;
     }
 
-    public function setNbWinRank1(int $nbWinRank1): self
+    public function setNbWinRank1(?int $nbWinRank1): self
     {
         $this->nbWinRank1 = $nbWinRank1;
 
@@ -242,7 +242,7 @@ class Draw
         return $this->amountRank1;
     }
 
-    public function setAmountRank1(float $amountRank1): self
+    public function setAmountRank1(?float $amountRank1): self
     {
         $this->amountRank1 = $amountRank1;
 
@@ -254,7 +254,7 @@ class Draw
         return $this->nbWinRank2;
     }
 
-    public function setNbWinRank2(int $nbWinRank2): self
+    public function setNbWinRank2(?int $nbWinRank2): self
     {
         $this->nbWinRank2 = $nbWinRank2;
 
@@ -266,7 +266,7 @@ class Draw
         return $this->amountRank2;
     }
 
-    public function setAmountRank2(float $amountRank2): self
+    public function setAmountRank2(?float $amountRank2): self
     {
         $this->amountRank2 = $amountRank2;
 
@@ -278,7 +278,7 @@ class Draw
         return $this->nbWinRank3;
     }
 
-    public function setNbWinRank3(int $nbWinRank3): self
+    public function setNbWinRank3(?int $nbWinRank3): self
     {
         $this->nbWinRank3 = $nbWinRank3;
 
@@ -290,7 +290,7 @@ class Draw
         return $this->amountRank3;
     }
 
-    public function setAmountRank3(float $amountRank3): self
+    public function setAmountRank3(?float $amountRank3): self
     {
         $this->amountRank3 = $amountRank3;
 
@@ -302,7 +302,7 @@ class Draw
         return $this->nbWinRank4;
     }
 
-    public function setNbWinRank4(int $nbWinRank4): self
+    public function setNbWinRank4(?int $nbWinRank4): self
     {
         $this->nbWinRank4 = $nbWinRank4;
 
@@ -314,7 +314,7 @@ class Draw
         return $this->amountRank4;
     }
 
-    public function setAmountRank4(float $amountRank4): self
+    public function setAmountRank4(?float $amountRank4): self
     {
         $this->amountRank4 = $amountRank4;
 
@@ -326,7 +326,7 @@ class Draw
         return $this->nbWinRank5;
     }
 
-    public function setNbWinRank5(int $nbWinRank5): self
+    public function setNbWinRank5(?int $nbWinRank5): self
     {
         $this->nbWinRank5 = $nbWinRank5;
 
@@ -338,7 +338,7 @@ class Draw
         return $this->amountRank5;
     }
 
-    public function setAmountRank5(float $amountRank5): self
+    public function setAmountRank5(?float $amountRank5): self
     {
         $this->amountRank5 = $amountRank5;
 
@@ -350,7 +350,7 @@ class Draw
         return $this->nbWinRank6;
     }
 
-    public function setNbWinRank6(int $nbWinRank6): self
+    public function setNbWinRank6(?int $nbWinRank6): self
     {
         $this->nbWinRank6 = $nbWinRank6;
 
@@ -362,7 +362,7 @@ class Draw
         return $this->amountRank6;
     }
 
-    public function setAmountRank6(float $amountRank6): self
+    public function setAmountRank6(?float $amountRank6): self
     {
         $this->amountRank6 = $amountRank6;
 
@@ -374,7 +374,7 @@ class Draw
         return $this->nbWinRank7;
     }
 
-    public function setNbWinRank7(int $nbWinRank7): self
+    public function setNbWinRank7(?int $nbWinRank7): self
     {
         $this->nbWinRank7 = $nbWinRank7;
 
@@ -386,7 +386,7 @@ class Draw
         return $this->amountRank7;
     }
 
-    public function setAmountRank7(float $amountRank7): self
+    public function setAmountRank7(?float $amountRank7): self
     {
         $this->amountRank7 = $amountRank7;
 
@@ -398,7 +398,7 @@ class Draw
         return $this->nbWinRank8;
     }
 
-    public function setNbWinRank8(int $nbWinRank8): self
+    public function setNbWinRank8(?int $nbWinRank8): self
     {
         $this->nbWinRank8 = $nbWinRank8;
 
@@ -410,7 +410,7 @@ class Draw
         return $this->amountRank8;
     }
 
-    public function setAmountRank8(float $amountRank8): self
+    public function setAmountRank8(?float $amountRank8): self
     {
         $this->amountRank8 = $amountRank8;
 
@@ -422,7 +422,7 @@ class Draw
         return $this->nbWinRank9;
     }
 
-    public function setNbWinRank9(int $nbWinRank9): self
+    public function setNbWinRank9(?int $nbWinRank9): self
     {
         $this->nbWinRank9 = $nbWinRank9;
 
@@ -434,7 +434,7 @@ class Draw
         return $this->amountRank9;
     }
 
-    public function setAmountRank9(float $amountRank9): self
+    public function setAmountRank9(?float $amountRank9): self
     {
         $this->amountRank9 = $amountRank9;
 
