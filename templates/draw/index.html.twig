@@ -6,9 +6,7 @@
     <div class="row justify-content-md-center mt-3">
         <div class="col-md-auto">
             {% for i in 1..50 %}
-                {% set modulo = 10 %}
-                {% set condition = loop.index % modulo == 0 %}
-
+                {% set condition = loop.index % 10 == 0 %}
                 {% if condition %}
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 {% endif %}

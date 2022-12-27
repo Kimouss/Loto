@@ -20,6 +20,22 @@ class DrawController extends AbstractController
     {
         $query = $drawRepository->getAllQuery();
 
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('draw/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/test', name: 'app_draw_test', methods: ['GET'])]
+    public function test(Request $request, DrawRepository $drawRepository, PaginatorInterface $paginator): Response
+    {
+        $query = $drawRepository->getAllQuery();
+
         $form = $this->createForm(NumberSearchType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -32,7 +48,7 @@ class DrawController extends AbstractController
             10
         );
 
-        return $this->render('draw/index.html.twig', [
+        return $this->render('draw/test.html.twig', [
             'pagination' => $pagination,
             'form' => $form->createView()
         ]);
