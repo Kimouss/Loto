@@ -48,8 +48,7 @@ success:
 ##
 cache: ## Reset cache
 cache:
-	@$(EXEC_PHP) php -r 'echo "Wait mysql database...\n"; set_time_limit(15); require __DIR__."/vendor/autoload.php"; (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__."/.env"); $$u = parse_url(getenv("DATABASE_URL")); for(;;) { if(@fsockopen($$u["host"], ($$u["port"] ?? 3306))) { break; }}'
-	-$(SYMFONY) cache:clear --no-warmup
+	@$(SYMFONY) cache:clear --no-warmup
 
 mysql: ## Reset the database and load fixtures
 mysql: .env.local vendor

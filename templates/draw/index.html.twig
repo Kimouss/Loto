@@ -3,54 +3,75 @@
 {% block title %}Draw index{% endblock %}
 
 {% block body %}
-    <h1>Draw index</h1>
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-md-auto">
+            {% for i in 1..50 %}
+                {% set modulo = 10 %}
+                {% set condition = loop.index % modulo == 0 %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{{ knp_pagination_sortable(pagination, 'NbDraw', 'draw.nbDraw') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Day', 'draw.day') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Date', 'draw.date') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Ball1', 'draw.ball1') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Ball2', 'draw.ball2') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Ball3', 'draw.ball3') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Ball4', 'draw.ball4') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Ball5', 'draw.ball5') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'LuckyBall', 'draw.luckyBall') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'WinComboAsc', 'draw.winComboAsc') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'actions', '') }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for draw in pagination %}
-            <tr>
-                <td>{{ draw.nbDraw }}</td>
-                <td>{{ draw.day }}</td>
-                <td>{{ draw.date ? draw.date|date('Y-m-d') : '' }}</td>
-                <td>{{ draw.ball1 }}</td>
-                <td>{{ draw.ball2 }}</td>
-                <td>{{ draw.ball3 }}</td>
-                <td>{{ draw.ball4 }}</td>
-                <td>{{ draw.ball5 }}</td>
-                <td>{{ draw.luckyBall }}</td>
-                <td>{{ draw.winComboAsc }}</td>
-                <td>
-                    <a href="{{ path('app_draw_show', {'id': draw.id}) }}">show</a>
-                    <a href="{{ path('app_draw_edit', {'id': draw.id}) }}">edit</a>
-                </td>
-            </tr>
-
-        {% else %}
-            <tr>
-                <td colspan="30">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+                {% if condition %}
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                {% endif %}
+                <input type="checkbox" class="btn-check" id="btncheck{{ i }}" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btncheck{{ i }}">
+                    {{ i | str_pad(2,'0') }}
+                </label>
+                {% if condition %}
+                    </div>
+                    </br>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 
-    <a href="{{ path('app_draw_new') }}">Create new</a>
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-md-auto">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'Day', 'draw.day') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Date', 'draw.date') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Ball1', 'draw.ball1') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Ball2', 'draw.ball2') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Ball3', 'draw.ball3') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Ball4', 'draw.ball4') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Ball5', 'draw.ball5') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'LuckyBall', 'draw.luckyBall') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'WinComboAsc', 'draw.winComboAsc') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'actions', '') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for draw in pagination %}
+                    <tr>
+                        <td>{{ draw.day }}</td>
+                        <td>{{ draw.date ? draw.date|date('Y-m-d') : '' }}</td>
+                        <td>{{ draw.ball1 }}</td>
+                        <td>{{ draw.ball2 }}</td>
+                        <td>{{ draw.ball3 }}</td>
+                        <td>{{ draw.ball4 }}</td>
+                        <td>{{ draw.ball5 }}</td>
+                        <td>{{ draw.luckyBall }}</td>
+                        <td>{{ draw.winComboAsc }}</td>
+                        <td>
+                            <a href="{{ path('app_draw_show', {'id': draw.id}) }}">show</a>
+                        </td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <td colspan="30">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-md-auto">
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

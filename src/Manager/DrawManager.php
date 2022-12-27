@@ -25,9 +25,14 @@ class DrawManager
 
         $date = null;
         if (array_key_exists('date_de_tirage', $row)) {
-            $timestamp = strtotime('27/02/2017');
-            $date = new DateTime($timestamp);
+            $rowDate = $row['date_de_tirage'];
+            if (!strpos($rowDate, '/')) {
+                $date = DateTime::createFromFormat('Ymd', $rowDate);
+            } else {
+                $date = DateTime::createFromFormat('d/m/Y', $rowDate);
+            }
         }
+
         $comboWin = $this->arrayKeyExists->getOrNull($row, 'combinaison_gagnante_en_ordre_croissant');
         if (is_null($comboWin)) {
             $comboWin = $this->arrayKeyExists->getOrNull($row, 'boules_gagnantes_en_ordre_croissant');

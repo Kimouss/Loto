@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Draw;
 use App\Form\DrawType;
+use App\Form\NumberSearchType;
 use App\Repository\DrawRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,12 @@ class DrawController extends AbstractController
     {
         $query = $drawRepository->getAllQuery();
 
+        $form = $this->createForm(NumberSearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            // @TODO Do something
+        }
+
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -27,6 +34,7 @@ class DrawController extends AbstractController
 
         return $this->render('draw/index.html.twig', [
             'pagination' => $pagination,
+            'form' => $form->createView()
         ]);
     }
 
