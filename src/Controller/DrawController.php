@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Draw;
 use App\Form\DrawType;
-use App\Form\NumberSearchType;
 use App\Repository\DrawRepository;
+use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
+use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/draw')]
 class DrawController extends AbstractController
 {
+    public function __construct(
+        private readonly PaginatedFinderInterface $drawFinder
+    )
+    {
+    }
+
     #[Route('/', name: 'app_draw_index', methods: ['GET'])]
     public function index(Request $request, DrawRepository $drawRepository, PaginatorInterface $paginator): Response
     {
@@ -32,25 +40,21 @@ class DrawController extends AbstractController
     }
 
     #[Route('/test', name: 'app_draw_test', methods: ['GET'])]
-    public function test(Request $request, DrawRepository $drawRepository, PaginatorInterface $paginator): Response
+    public function test(RepositoryManagerInterface $repositoryManager, Request $request, DrawRepository $drawRepository, PaginatorInterface $paginator): Response
     {
-        $query = $drawRepository->getAllQuery();
-
-        $form = $this->createForm(NumberSearchType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            // @TODO Do something
-        }
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            10
-        );
+        $repo = $repositoryManager->getRepository(Draw::class);
+        dd($repo->find('3-5-9'));
+        dd($this->drawFinder->find(''));
+//        $query = $drawRepository->getAllQuery();
+//
+//        $pagination = $paginator->paginate(
+//            $query,
+//            $request->query->getInt('page', 1),
+//            10
+//        );
 
         return $this->render('draw/test.html.twig', [
             'pagination' => $pagination,
-            'form' => $form->createView()
         ]);
     }
 

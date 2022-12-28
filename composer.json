@@ -7,9 +7,11 @@
         "php": "^8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-zip": "*",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "friendsofsymfony/elastica-bundle": "^6.2",
         "knplabs/knp-paginator-bundle": "^5.9",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/console": "5.4.*",
@@ -26,8 +28,7 @@
         "symfony/validator": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "5.4.*",
-        "twig/extensions": "^1.5",
-      "ext-zip": "*"
+        "twig/extensions": "^1.5"
     },
     "config": {
         "allow-plugins": {

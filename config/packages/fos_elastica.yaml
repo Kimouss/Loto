@@ -1,0 +1,24 @@
+# Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/doc/setup.md
+fos_elastica:
+    clients:
+        default: { url: '%env(ELASTICSEARCH_URL)%' }
+    indexes:
+        draw:
+            persistence:
+                # the driver can be orm, mongodb or phpcr
+                driver: orm
+                model: App\Entity\Draw
+                provider: ~
+                finder: ~
+            properties:
+                id: ~
+                nbDraw: ~
+                day: ~
+                date: ~
+                ball1: ~
+                ball2: ~
+                ball3: ~
+                ball4: ~
+                ball5: ~
+                luckyBall: ~
+                winComboAsc: ~

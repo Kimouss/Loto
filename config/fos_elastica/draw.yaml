@@ -1,0 +1,36 @@
+persistence:
+  # the driver can be orm, mongodb or phpcr
+  driver: orm
+  model: App\Entity\Draw
+  provider: ~
+  finder: ~
+properties:
+  id: ~
+  nbDraw: ~
+  day: ~
+  date: ~
+  ball1: ~
+  ball2: ~
+  ball3: ~
+  ball4: ~
+  ball5: ~
+  luckyBall: ~
+  winComboAsc: ~
+  nbWinRank1: ~
+  amountRank1: ~
+  nbWinRank2: ~
+  amountRank2: ~
+  nbWinRank3: ~
+  amountRank3: ~
+  nbWinRank4: ~
+  amountRank4: ~
+  nbWinRank5: ~
+  amountRank5: ~
+  nbWinRank6: ~
+  amountRank6: ~
+  nbWinRank7: ~
+  amountRank7: ~
+  nbWinRank8: ~
+  amountRank8: ~
+  nbWinRank9: ~
+  amountRank9: ~
