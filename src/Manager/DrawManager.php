@@ -6,19 +6,39 @@ use App\Entity\Draw;
 use App\Repository\DrawRepository;
 use App\Utils\ArrayKeyExists;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class DrawManager
 {
+    private const BATCH_SIZE = 200;
+
     public function __construct(
         private readonly DrawRepository $drawRepository,
         private readonly ArrayKeyExists $arrayKeyExists,
+        private readonly EntityManagerInterface $entityManager,
     )
     {
     }
 
+    public function import(array $rows, ProgressBar $progressBar, $name): void
+    {
+        for ($i = 0; $i < count($rows); $i++) {
+            $flush = false;
+            if (($i % self::BATCH_SIZE) === 0) {
+                $flush = true;
+            }
+
+            $this->createFromCsv($rows[$i], $name, $flush);
+            $progressBar->advance();
+        }
+
+        $this->entityManager->flush();
+    }
+
     public function createFromCsv(array $row, string $name, bool $flush = false): Draw
     {
-        $draw = $this->drawRepository->findOneBy(['nbDraw' => $row['annee_numero_de_tirage']]);
+        $draw = $this->drawRepository->findOneBy(['nbDraw' => $row['annee_numero_de_tirage'].'_'.$name]);
         if ($draw instanceof Draw) {
             return $draw;
         }
@@ -40,7 +60,7 @@ class DrawManager
 
         $draw = new Draw();
         $draw
-            ->setNbDraw($name.'_'.$this->arrayKeyExists->getOrNull($row, 'annee_numero_de_tirage', 'int'))
+            ->setNbDraw($this->arrayKeyExists->getOrNull($row, 'annee_numero_de_tirage', 'int').'_'.$name)
             ->setDay($row['jour_de_tirage'])
             ->setDate($date)
             ->setBall1($this->arrayKeyExists->getOrNull($row, 'boule_1', 'int'))

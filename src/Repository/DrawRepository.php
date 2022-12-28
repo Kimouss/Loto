@@ -32,10 +32,9 @@ class DrawRepository extends ServiceEntityRepository
                     ->setParameter('query_'.$key, '%'.$str.'%')
                 ;
             }
-
         }
 
-        return $qb->getQuery();
+        return $qb->orderBy('draw.nbDraw', 'DESC')->getQuery();
     }
 
     public function save(Draw $entity, bool $flush = false): void

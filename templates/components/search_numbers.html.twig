@@ -20,26 +20,47 @@
 
     <div class="row justify-content-md-center mt-3">
         <div class="col-md-auto">
-            <button
-                    id="search"
-                    type="button"
-                    data-model="query"
-                    value="{{ query }}"
-                    data-action="live#update"
-                    class="btn btn-outline-primary"
-            >Chercher</button>
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <button id="search" type="button" class="btn btn-outline-primary"
+                            data-model="query"
+                            value="{{ query }}"
+                            data-action="live#update"
+                    >Chercher</button>
+                </div>
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <select id="limit" class="form-select" aria-label="Limit" data-model="limit">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row justify-content-md-center mt-3">
         <div class="col-md-auto">
-            <div data-loading="addClass(opacity-50)">
+            <span data-loading="show">
+                <div class="container-loader">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                </div>
+            </span>
+            <div data-loading="hide">
                 <div class="row justify-content-md-center mt-3">
                     <div class="col-md-auto">
                         <table class="table table-striped">
                             <thead>
                             {% if query is empty %}
                                 <tr>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'NbDraw', 'draw.nbDraw') }}</th>
                                     <th>{{ knp_pagination_sortable(this.pagination, 'Day', 'draw.day') }}</th>
                                     <th>{{ knp_pagination_sortable(this.pagination, 'Date', 'draw.date') }}</th>
                                     <th>{{ knp_pagination_sortable(this.pagination, 'Ball1', 'draw.ball1') }}</th>
@@ -53,6 +74,7 @@
                                 </tr>
                             {% else %}
                                 <tr>
+                                    <th>NbDraw</th>
                                     <th>Day</th>
                                     <th>Date</th>
                                     <th>Ball1</th>
@@ -69,6 +91,7 @@
                             <tbody>
                             {% for draw in this.pagination %}
                                 <tr>
+                                    <td>{{ draw.nbDraw }}</td>
                                     <td>{{ draw.day }}</td>
                                     <td>{{ draw.date ? draw.date|date('Y-m-d') : '' }}</td>
                                     <td>{{ draw.ball1 }}</td>

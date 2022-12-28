@@ -3,7 +3,6 @@
 namespace App\Twig\Components;
 
 use App\Repository\DrawRepository;
-use App\Service\PackageRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,6 +17,9 @@ class SearchNumbersComponent
 
     #[LiveProp(writable: true)]
     public ?string $query = null;
+
+    #[LiveProp(writable: true)]
+    public int $limit = 10;
 
     public function __construct(
         private readonly DrawRepository     $drawRepository,
@@ -34,7 +36,7 @@ class SearchNumbersComponent
         return $this->paginator->paginate(
             $query,
             $this->requestStack->getCurrentRequest()->query->getInt('page', 1),
-            10
+            $this->limit
         );
     }
 }

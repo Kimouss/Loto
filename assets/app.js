@@ -11,7 +11,6 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
-
 const $ = require('jquery');
 require('bootstrap');
 
@@ -28,5 +27,28 @@ $(document).ready(function() {
         });
 
         $('#search').val(numbers.slice(0, -1));
-    })
+    });
+
+    $('#lightSwitch').on('click', function () {
+        switchChange();
+    });
+
+    $('#search').on('click', function () {
+        switchChange();
+    });
+
+    $('#limit').on('change', function () {
+        switchChange();
+    });
+
+    let switchChange = function () {
+        setTimeout(function() {
+            let lightSwitch = localStorage.getItem('lightSwitch');
+            if (lightSwitch === 'dark') {
+                $('table').each(function (key, element) {
+                    element.classList.add('table-dark');
+                })
+            }
+        },500)
+    };
 });

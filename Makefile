@@ -114,29 +114,29 @@ success_import:
 import: import_loto import_euromillions import_superloto import_extraloto success_import
 
 import_loto:
-	$(SYMFONY) app:import:csv data/loto_197605.csv
-	$(SYMFONY) app:import:csv data/loto_200810.csv
-	$(SYMFONY) app:import:csv data/loto_201703.csv
-	$(SYMFONY) app:import:csv data/loto_201902.csv
-	$(SYMFONY) app:import:csv data/loto_201911.csv
+	$(SYMFONY) app:import:csv archive/loto_197605.csv
+	$(SYMFONY) app:import:csv archive/loto_200810.csv
+	$(SYMFONY) app:import:csv archive/loto_201703.csv
+	$(SYMFONY) app:import:csv archive/loto_201902.csv
+	$(SYMFONY) app:import:csv archive/loto_201911.csv
 
 import_euromillions:
-	$(SYMFONY) app:import:csv data/euromillions_200402.csv
-	$(SYMFONY) app:import:csv data/euromillions_201105.csv
-	$(SYMFONY) app:import:csv data/euromillions_201402.csv
-	$(SYMFONY) app:import:csv data/euromillions_201609.csv
-	$(SYMFONY) app:import:csv data/euromillions_201902.csv
-	$(SYMFONY) app:import:csv data/euromillions_202002.csv
+	$(SYMFONY) app:import:csv archive/euromillions_200402.csv
+	$(SYMFONY) app:import:csv archive/euromillions_201105.csv
+	$(SYMFONY) app:import:csv archive/euromillions_201402.csv
+	$(SYMFONY) app:import:csv archive/euromillions_201609.csv
+	$(SYMFONY) app:import:csv archive/euromillions_201902.csv
+	$(SYMFONY) app:import:csv archive/euromillions_202002.csv
 
 import_superloto:
-	$(SYMFONY) app:import:csv data/superloto_199605.csv
-	$(SYMFONY) app:import:csv data/superloto_200810.csv
-	$(SYMFONY) app:import:csv data/superloto_201703.csv
-	$(SYMFONY) app:import:csv data/superloto_201907.csv
+	$(SYMFONY) app:import:csv archive/superloto_199605.csv
+	$(SYMFONY) app:import:csv archive/superloto_200810.csv
+	$(SYMFONY) app:import:csv archive/superloto_201703.csv
+	$(SYMFONY) app:import:csv archive/superloto_201907.csv
 
 import_extraloto:
-	$(SYMFONY) app:import:csv data/grandloto_201912.csv
-	$(SYMFONY) app:import:csv data/lotonoel_201703.csv
+	$(SYMFONY) app:import:csv archive/grandloto_201912.csv
+	$(SYMFONY) app:import:csv archive/lotonoel_201703.csv
 
 mysql_data: mysql import
 
