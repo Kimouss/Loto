@@ -16,7 +16,7 @@ class DrawManager
     {
     }
 
-    public function createFromCsv(array $row, bool $flush = false): Draw
+    public function createFromCsv(array $row, string $name, bool $flush = false): Draw
     {
         $draw = $this->drawRepository->findOneBy(['nbDraw' => $row['annee_numero_de_tirage']]);
         if ($draw instanceof Draw) {
@@ -40,7 +40,7 @@ class DrawManager
 
         $draw = new Draw();
         $draw
-            ->setNbDraw($this->arrayKeyExists->getOrNull($row, 'annee_numero_de_tirage', 'int'))
+            ->setNbDraw($name.'_'.$this->arrayKeyExists->getOrNull($row, 'annee_numero_de_tirage', 'int'))
             ->setDay($row['jour_de_tirage'])
             ->setDate($date)
             ->setBall1($this->arrayKeyExists->getOrNull($row, 'boule_1', 'int'))

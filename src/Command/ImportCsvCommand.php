@@ -50,7 +50,11 @@ class ImportCsvCommand extends Command
         $fp = file($filePath, FILE_SKIP_EMPTY_LINES);
         $progressBar = new ProgressBar($output, count($fp));
         $rows = $this->readCsv($filePath);
-        $this->import($rows, $progressBar);
+
+        $parts = explode("_", basename($filePath));
+        $name = $parts[0];
+
+        $this->import($rows, $progressBar, $name);
 
         $progressBar->finish();
         $io->newLine(2);
@@ -84,7 +88,7 @@ class ImportCsvCommand extends Command
         return $result;
     }
 
-    private function import(array $rows, ProgressBar $progressBar)
+    private function import(array $rows, ProgressBar $progressBar, $name)
     {
         for ($i = 0; $i < count($rows); $i++) {
             $flush = false;
@@ -92,7 +96,7 @@ class ImportCsvCommand extends Command
                 $flush = true;
             }
 
-            $this->drawManager->createFromCsv($rows[$i], $flush);
+            $this->drawManager->createFromCsv($rows[$i], $name, $flush);
             $progressBar->advance();
         }
 

@@ -17,4 +17,16 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+
+    $('[id*=btncheck_]').on('click', function () {
+        let numbers = '';
+        $('[id*=btncheck_]').each(function () {
+            if (this.checked) {
+                numbers += this.value + '-'
+            }
+
+        });
+
+        $('#search').val(numbers.slice(0, -1));
+    })
 });

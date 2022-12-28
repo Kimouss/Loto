@@ -4,8 +4,8 @@ namespace App\Twig\Components;
 
 use App\Repository\DrawRepository;
 use App\Service\PackageRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -27,13 +27,13 @@ class SearchNumbersComponent
     {
     }
 
-    public function getPagination()
+    public function getPagination(): PaginationInterface
     {
-        $query = $this->drawRepository->getAllQuery();
+        $query = $this->drawRepository->getAllQuery($this->query);
 
         return $this->paginator->paginate(
             $query,
-            $this->requestStack->getCurrentRequest()->query->getInt('page', 2),
+            $this->requestStack->getCurrentRequest()->query->getInt('page', 1),
             10
         );
     }

@@ -17,7 +17,7 @@ class Draw
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $nbDraw = null;
+    private ?string $nbDraw = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $day = null;
@@ -105,12 +105,12 @@ class Draw
         return $this->id;
     }
 
-    public function getNbDraw(): ?int
+    public function getNbDraw(): ?string
     {
         return $this->nbDraw;
     }
 
-    public function setNbDraw(?int $nbDraw): self
+    public function setNbDraw(?string $nbDraw): self
     {
         $this->nbDraw = $nbDraw;
 

@@ -1,28 +1,70 @@
-<div class="row justify-content-md-center mt-3">
-    <div class="col-md-auto">
-        <div{{ attributes }}>
-            <input
-                    type="text"
-                    data-model="query"
-            >
+<div {{ attributes }}>
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-md-auto">
+            {% for i in 1..50 %}
+                {% set condition = loop.index % 10 == 0 %}
+                {% if condition %}
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                {% endif %}
+                <input type="checkbox" class="btn-check" id="btncheck_{{ i }}" value="{{ i }}" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btncheck_{{ i }}">
+                    {{ i | str_pad(2,'0') }}
+                </label>
+                {% if condition %}
+                    </div>
+                    </br>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-md-auto">
+            <button
+                    id="search"
+                    type="button"
+                    data-model="query"
+                    value="{{ query }}"
+                    data-action="live#update"
+                    class="btn btn-outline-primary"
+            >Chercher</button>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center mt-3">
+        <div class="col-md-auto">
             <div data-loading="addClass(opacity-50)">
                 <div class="row justify-content-md-center mt-3">
                     <div class="col-md-auto">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Day', 'draw.day') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Date', 'draw.date') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Ball1', 'draw.ball1') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Ball2', 'draw.ball2') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Ball3', 'draw.ball3') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Ball4', 'draw.ball4') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'Ball5', 'draw.ball5') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'LuckyBall', 'draw.luckyBall') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'WinComboAsc', 'draw.winComboAsc') }}</th>
-                                <th>{{ knp_pagination_sortable(this.pagination, 'actions', '') }}</th>
-                            </tr>
+                            {% if query is empty %}
+                                <tr>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Day', 'draw.day') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Date', 'draw.date') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Ball1', 'draw.ball1') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Ball2', 'draw.ball2') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Ball3', 'draw.ball3') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Ball4', 'draw.ball4') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'Ball5', 'draw.ball5') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'LuckyBall', 'draw.luckyBall') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'WinComboAsc', 'draw.winComboAsc') }}</th>
+                                    <th>{{ knp_pagination_sortable(this.pagination, 'actions', '') }}</th>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Date</th>
+                                    <th>Ball1</th>
+                                    <th>Ball2</th>
+                                    <th>Ball3</th>
+                                    <th>Ball4</th>
+                                    <th>Ball5</th>
+                                    <th>LuckyBall</th>
+                                    <th>WinComboAsc</th>
+                                    <th>actions</th>
+                                </tr>
+                            {% endif %}
                             </thead>
                             <tbody>
                             {% for draw in this.pagination %}
@@ -48,15 +90,18 @@
                             {% endfor %}
                             </tbody>
                         </table>
-
-                    </div>
-
-                    <div class="col-md-auto">
-                        <div class="navigation">
-                            {{ knp_pagination_render(this.pagination) }}
-                        </div>
                     </div>
                 </div>
+
+                {% if query is empty %}
+                    <div class="row justify-content-md-center mt-3">
+                        <div class="col-md-auto">
+                            <div class="navigation">
+                                {{ knp_pagination_render(this.pagination) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

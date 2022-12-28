@@ -22,11 +22,20 @@ class DrawRepository extends ServiceEntityRepository
         parent::__construct($registry, Draw::class);
     }
 
-    public function getAllQuery(): Query
+    public function getAllQuery($query = null): Query
     {
-        return $this->createQueryBuilder('draw')
-            ->getQuery()
-            ;
+        $qb = $this->createQueryBuilder('draw');
+        if ($query) {
+            $queries = explode('-', $query);
+            foreach ($queries as $key => $str) {
+                $qb->andWhere('draw.winComboAsc like :query_'.$key)
+                    ->setParameter('query_'.$key, '%'.$str.'%')
+                ;
+            }
+
+        }
+
+        return $qb->getQuery();
     }
 
     public function save(Draw $entity, bool $flush = false): void
