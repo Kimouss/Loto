@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            {% for head in this.header %}
+            <th>{{ head | upper }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in this.rows %}
+        <tr>
+            {% for head in this.header %}
+                {% if head == 'percent' %}
+                <td>{{ row[head] | number_format(4, '.', ',') }}%</td>
+                {% else %}
+                    <td>{{ row[head] }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="30">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

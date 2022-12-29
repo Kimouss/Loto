@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Draw;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,6 +36,20 @@ class DrawRepository extends ServiceEntityRepository
         }
 
         return $qb->orderBy('draw.nbDraw', 'DESC')->getQuery();
+    }
+
+    public function getAllBalls()
+    {
+        return $this->createQueryBuilder('draw')
+            ->select('draw.ball1')
+            ->addSelect('draw.ball2')
+            ->addSelect('draw.ball3')
+            ->addSelect('draw.ball4')
+            ->addSelect('draw.ball5')
+            ->getQuery()
+            ->getResult()
+//            ->getResult(AbstractQuery::HYDRATE_ARRAY)
+            ;
     }
 
     public function save(Draw $entity, bool $flush = false): void

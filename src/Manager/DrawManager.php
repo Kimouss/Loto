@@ -94,4 +94,35 @@ class DrawManager
 
         return $draw;
     }
+
+    public function getAverageAll(): array
+    {
+        $all = $this->drawRepository->getAllBalls();
+        $selects = ['ball1', 'ball2', 'ball3', 'ball4', 'ball5'];
+        $countAll = count($all) * count($selects);
+
+        $count = [];
+        /** @var Draw $stat */
+        foreach ($all as $stat) {
+            foreach ($selects as $select) {
+                if (!array_key_exists($stat[$select], $count)) {
+                    $count[$stat[$select]] = 0;
+                }
+                $count[$stat[$select]]++;
+            }
+        }
+
+        $result = [];
+        foreach ($count as $key => $value) {
+            $result[$key] = [
+                'ball' => $key,
+                'count' => $value,
+                'percent' => $value * 100 / $countAll,
+            ];
+        }
+
+        ksort($result);
+
+        return $result;
+    }
 }
