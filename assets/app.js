@@ -13,8 +13,21 @@ import './bootstrap';
 
 const $ = require('jquery');
 require('bootstrap');
+require('@fortawesome/fontawesome-free');
 
 $(document).ready(function() {
+    let lotoTheme = localStorage.getItem('loto-theme');
+
+    function init() {
+        if (lotoTheme === null) {
+            localStorage.setItem('loto-theme', 'dark')
+            lotoTheme = localStorage.getItem('loto-theme');
+        }
+
+        currentTheme();
+    }
+
+
     $('[data-toggle="popover"]').popover();
 
     $('[id*=btncheck_]').on('click', function () {
@@ -29,26 +42,28 @@ $(document).ready(function() {
         $('#search').val(numbers.slice(0, -1));
     });
 
-    $('#lightSwitch').on('click', function () {
+    let currentTheme = function() {
+        let $currentTheme = $('#current_theme');
+        if(localStorage.getItem('loto-theme') === 'dark') {
+            $currentTheme.html('<i class="fa-solid fa-moon fa-lg"></i>');
+        }
+        if(localStorage.getItem('loto-theme') === 'light') {
+            $currentTheme.html('<i class="fa-solid fa-sun fa-lg"></i>');
+        }
+        if(localStorage.getItem('loto-theme') === 'auto') {
+            $currentTheme.html('<i class="fa-solid fa-circle-half-stroke fa-lg">');
+        }
         switchChange();
-    });
-
-    $('#search').on('click', function () {
-        switchChange();
-    });
-
-    $('#limit').on('change', function () {
-        switchChange();
-    });
-
-    let switchChange = function () {
-        setTimeout(function() {
-            let lightSwitch = localStorage.getItem('lightSwitch');
-            if (lightSwitch === 'dark') {
-                $('table').each(function (key, element) {
-                    element.classList.add('table-dark');
-                })
-            }
-        },500)
     };
+
+    $('[id*=loto-theme-]').on('click', function() {
+        localStorage.setItem('loto-theme', $('#'+$(this)[0].id).data('bsThemeValue'));
+        switchChange();
+    });
+
+    let switchChange = function() {
+        $('html').attr('data-bs-theme', localStorage.getItem('loto-theme'))
+    };
+
+    init();
 });

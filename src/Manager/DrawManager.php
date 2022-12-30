@@ -111,18 +111,38 @@ class DrawManager
                 $count[$stat[$select]]++;
             }
         }
+        arsort($count);
+        $flipped = array_flip($count);
+        $flipped = array_slice($flipped, 0, 10);
 
+        krsort($count);
         $result = [];
+        $tenMost = [];
         foreach ($count as $key => $value) {
-            $result[$key] = [
-                'ball' => $key,
-                'count' => $value,
-                'percent' => $value * 100 / $countAll,
-            ];
+            $result[$key] = $this->arrayTransformer($key, $value, $countAll);
+            if (in_array($key, $flipped)) {
+                $tenMost[$key] = $this->arrayTransformer($key, $value, $countAll);
+                $result[$key]['attr'] = ['bold' => true];
+            }
         }
 
         ksort($result);
+        usort($tenMost, function($a, $b) {
+            return $b['count'] <=> $a['count'];
+        });
 
-        return $result;
+        return [
+            'result' => $result,
+            'ten_most' => $tenMost,
+        ];
+    }
+
+    private function arrayTransformer($key, $value, $countAll): array
+    {
+        return [
+            'ball' => $key,
+            'count' => $value,
+            'percent' => $value * 100 / $countAll,
+        ];
     }
 }

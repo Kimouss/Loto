@@ -19,13 +19,13 @@ kill:
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
 
 install: ## Install and start the project
-install: .env.local networks build start mysql assets success
+install: .env.local networks build start assets success
 
 reset: ## Stop and start a fresh install of the project
 reset: kill install
 
 networks:
-	 -docker network create kiwi_network
+	 -docker network create loto_network
 
 start: ## Start the project
 	$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate

@@ -10,11 +10,21 @@
     {% for row in this.rows %}
         <tr>
             {% for head in this.header %}
-                {% if head == 'percent' %}
-                <td>{{ row[head] | number_format(4, '.', ',') }}%</td>
-                {% else %}
-                    <td>{{ row[head] }}</td>
+                <td>
+                {% if row['attr'] is defined and row['attr']['bold'] %}
+                    <strong>
                 {% endif %}
+
+                {% if head == 'percent' %}
+                    {{ row[head] | number_format(4, '.', ',') }}%
+                {% else %}
+                    {{ row[head] }}
+                {% endif %}
+
+                {% if row['attr'] is defined and row['attr']['bold'] %}
+                    *</strong>
+                {% endif %}
+                </td>
             {% endfor %}
         </tr>
     {% else %}

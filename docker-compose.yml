@@ -4,7 +4,7 @@ services:
         build: .docker/apache
         container_name: loto_apache
         ports:
-            - '50515:80'
+            - '80'
         volumes:
             - .:/var/www/app:cached
         depends_on:
@@ -16,7 +16,7 @@ services:
         image: mysql:latest
         container_name: loto_mysql
         ports:
-            - '3306:3306'
+            - '3306'
         networks:
             - loto_network
         environment:
@@ -37,7 +37,7 @@ services:
             PMA_HOST: mysql
             PMA_PORT: 3306
         ports:
-            - '50516:80'
+            - '80'
         links:
             - mysql
         networks:

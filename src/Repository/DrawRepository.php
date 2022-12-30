@@ -48,7 +48,6 @@ class DrawRepository extends ServiceEntityRepository
             ->addSelect('draw.ball5')
             ->getQuery()
             ->getResult()
-//            ->getResult(AbstractQuery::HYDRATE_ARRAY)
             ;
     }
 
